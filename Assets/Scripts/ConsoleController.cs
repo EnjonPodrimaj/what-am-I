@@ -2,19 +2,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ConsoleController : MonoBehaviour {
-    //public static Action<bool> SendGameObject;
-    //public static Action<bool> DisablePlayerControllersAction;
-
     [SerializeField] private GameObject _debugPanel;
-    public GameObject _downButton;
-    public GameObject _leftButton;
 
-    public void OpenDebugOptions() {
-        _debugPanel.SetActive(true);
-        //_leftButton.transform.position = _downButton.transform.position;
-        _downButton.SetActive(false);
-        
+    public DebugController debugController;
+
+    public GameObject currentlyClicked; 
+
+    public void OpenDebugOptions() {       
+        string clickedButtonName = EventSystem.current.currentSelectedGameObject.name;
+        currentlyClicked = EventSystem.current.currentSelectedGameObject;
+        if (clickedButtonName == "Down") {
+            debugController.ShowLeftButton();
+            debugController.ShowRighttButton();
+            debugController.ShowUpButton();
+        }
+        else if (clickedButtonName == "Left") {
+            debugController.ShowDownButton();
+            debugController.ShowRighttButton();
+            debugController.ShowUpButton();
+        }
+        else if (clickedButtonName == "Right") {
+            debugController.ShowDownButton();
+            debugController.ShowLeftButton();
+            debugController.ShowUpButton();
+        }
+        else if (clickedButtonName == "Up") {
+            debugController.ShowDownButton();
+            debugController.ShowRighttButton();
+            debugController.ShowLeftButton();
+        }
     }
+
+
 }
+
